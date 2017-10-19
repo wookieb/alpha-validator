@@ -1,0 +1,37 @@
+{
+  "name": "alpha-validator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha -r ts-node/register src/**/*Test.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wookieb/alpha-validator.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wookieb/alpha-validator/issues"
+  },
+  "homepage": "https://github.com/wookieb/alpha-validator#readme",
+  "dependencies": {
+    "ajv": "^5.2.3"
+  },
+  "devDependencies": {
+    "@types/chai": "^4.0.1",
+    "@types/faker": "^4.1.0",
+    "@types/mocha": "^2.2.41",
+    "@types/node": "^8.0.46",
+    "@types/sinon": "^2.3.1",
+    "@types/validator": "^6.2.0",
+    "chai": "^4.0.2",
+    "faker": "^4.1.0",
+    "mocha": "^3.4.2",
+    "sinon": "^2.3.5",
+    "snap-shot": "^2.17.0",
+    "ts-node": "^3.1.0",
+    "typescript": "^2.3.4"
+  }
+}
