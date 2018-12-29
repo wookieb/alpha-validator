@@ -6,7 +6,8 @@
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/bridge-validate.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest",
-    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc"
+    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
+    "prepublishOnly": "npm run compile"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
@@ -17,5 +18,6 @@
   "devDependencies": {
     "alpha-validator": "^0.1.0",
     "validate.js": "^0.12.0"
-  }
+  },
+  "gitHead": "86ccd2b9e189dfe22e300bff09de7eb994179f41"
 }

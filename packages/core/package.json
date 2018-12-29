@@ -10,5 +10,6 @@
     "prepublishOnly": "npm run compile"
   },
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
-  "license": "MIT"
+  "license": "MIT",
+  "gitHead": "86ccd2b9e189dfe22e300bff09de7eb994179f41"
 }
