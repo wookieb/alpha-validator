@@ -1,0 +1,39 @@
+export interface Violation {
+    path?: string[];
+    message: string;
+}
+
+export function createViolation(message: string, path?: string[] | string) {
+    return {
+        path: path === undefined ? undefined : (Array.isArray(path) ? path : [path]),
+        message
+    }
+}
+
+function matchesPath(path: string[], searchPath: string[]) {
+    return searchPath.every((entry, index) => path[index] === entry);
+}
+
+export class ViolationsList {
+    private violations: Violation[] = [];
+
+    static create() {
+        return new ViolationsList();
+    }
+
+    addViolation(message: string, path?: string[] | string): this;
+    addViolation(violation: Violation): this;
+    addViolation(messageOrViolation: string | Violation, path?: string[] | string): this {
+        this.violations.push(typeof messageOrViolation === 'string' ? createViolation(messageOrViolation, path) : messageOrViolation);
+        return this;
+    }
+
+    getForPath(path: string[] | string): Violation[] {
+        const realPath = Array.isArray(path) ? path : [path];
+        return this.violations.filter(v => matchesPath(v.path, realPath));
+    }
+
+    getViolations() {
+        return this.violations;
+    }
+}

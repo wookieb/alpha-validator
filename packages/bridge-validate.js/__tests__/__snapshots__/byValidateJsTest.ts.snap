@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`byValidateJs nested validation 1`] = `
+ViolationsList {
+  "violations": Array [
+    Object {
+      "message": "Profile name is too short (minimum is 5 characters)",
+      "path": Array [
+        "profile",
+        "name",
+      ],
+    },
+  ],
+}
+`;
+
+exports[`byValidateJs simple validation 1`] = `
+ViolationsList {
+  "violations": Array [
+    Object {
+      "message": "Name is too short (minimum is 5 characters)",
+      "path": Array [
+        "name",
+      ],
+    },
+  ],
+}
+`;

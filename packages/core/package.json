@@ -1,0 +1,14 @@
+{
+  "name": "alpha-validator",
+  "version": "0.1.0",
+  "description": "Validation abstraction that allows you to completely customize whole validation process",
+  "main": "compiled/index.js",
+  "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/core",
+  "scripts": {
+    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
+    "test": "../../node_modules/.bin/jest",
+    "prepublishOnly": "npm run compile"
+  },
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT"
+}
