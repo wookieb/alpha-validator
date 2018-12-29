@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Validation abstraction that allows you to completely customize whole validation process",
   "main": "compiled/index.js",
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/core",

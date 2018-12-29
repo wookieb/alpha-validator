@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-bridge-validate.js",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "index.js",
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/bridge-validate.js",
@@ -16,7 +16,7 @@
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
-    "alpha-validator": "^0.1.0",
+    "alpha-validator": "^0.1.1",
     "validate.js": "^0.12.0"
   },
   "gitHead": "86ccd2b9e189dfe22e300bff09de7eb994179f41"
