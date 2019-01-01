@@ -2,13 +2,16 @@
   "name": "alpha-validator-bridge-validate.js",
   "version": "0.1.2",
   "description": "",
-  "main": "index.js",
+  "main": "compiled/index.js",
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/bridge-validate.js",
   "scripts": {
     "test": "../../node_modules/.bin/jest",
     "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
     "prepublishOnly": "npm run compile"
   },
+  "files": [
+    "compiled/*"
+  ],
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "peerDependencies": {

@@ -9,6 +9,9 @@
     "test": "../../node_modules/.bin/jest",
     "prepublishOnly": "npm run compile"
   },
+  "files": [
+    "compiled/*"
+  ],
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "gitHead": "896da22c4b0ff5f69c1a10f988522b65274ae67c"
