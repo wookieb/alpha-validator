@@ -28,6 +28,17 @@ export class ViolationsList {
         return this;
     }
 
+    merge(violation: Violation | ViolationsList | undefined): this {
+        if (violation) {
+            if (violation instanceof ViolationsList) {
+                this.violations.push(...violation.getViolations());
+            } else {
+                this.violations.push(violation);
+            }
+        }
+        return this;
+    }
+
     getForPath(path: string[] | string): Violation[] {
         const realPath = Array.isArray(path) ? path : [path];
         return this.violations.filter(v => matchesPath(v.path, realPath));
@@ -35,5 +46,12 @@ export class ViolationsList {
 
     getViolations() {
         return this.violations;
+    }
+
+    getListOrNothing() {
+        if (this.getViolations().length) {
+            return this;
+        }
+        return undefined;
     }
 }
