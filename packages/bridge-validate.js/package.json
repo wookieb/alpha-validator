@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-bridge-validate.js",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
