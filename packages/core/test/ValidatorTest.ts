@@ -1,4 +1,5 @@
-import {createViolation, Validation, Validator, ViolationsList} from "../src";
+import {createViolation, Validator, ViolationsList} from "@src/index";
+import {Validation} from "monet";
 
 describe('Validator', () => {
     let validator: Validator;
@@ -10,7 +11,7 @@ describe('Validator', () => {
         validator = new Validator();
         validation = jest.fn();
 
-        validator.registerValidation(SCHEMA, validation);
+        validator.registerValidationForSchema(SCHEMA, validation);
     });
 
     it('registering validation', () => {
@@ -18,7 +19,7 @@ describe('Validator', () => {
             return undefined
         };
 
-        expect(validator.registerValidation(SCHEMA, validation))
+        expect(validator.registerValidationForSchema(SCHEMA, validation))
             .toBe(validator);
 
         expect(validator.hasValidation(SCHEMA))
@@ -32,50 +33,60 @@ describe('Validator', () => {
                 .toThrowErrorMatchingSnapshot();
         });
 
-        it('resolves to undefined if no error returned', () => {
+        it('resolves to Validation.Success', () => {
             validation.mockReturnValue(undefined);
-            return expect(validator.validate({}, SCHEMA))
+            const data = {};
+            return expect(validator.validate(data, SCHEMA))
                 .resolves
-                .toBeUndefined();
+                .toEqual(Validation.Success(data))
         });
 
-        it('resolves to undefined if validation resolves to undefined', () => {
+        it('resolves to Validation.Success if schema validation resolves to undefined', () => {
             validation.mockResolvedValue(undefined);
-            return expect(validator.validate({}, SCHEMA))
+            const data = {};
+            return expect(validator.validate(data, SCHEMA))
                 .resolves
-                .toBeUndefined();
+                .toEqual(Validation.Success(data))
         });
 
-        it('resolves to ViolationList if violation is returned', () => {
+        it('resolves to Validation.Fail if violation is returned', () => {
             const violation = createViolation('foo');
             validation.mockReturnValue(violation);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toEqual(ViolationsList.create().addViolation(violation));
+                .toEqual(
+                    Validation.Fail(
+                        ViolationsList.create().addViolation(violation)
+                    )
+                );
         });
 
-        it('resolves to ViolationList if validation resolves to violation', () => {
+        it('resolves to Validation.Fail if validation resolves to violation', () => {
             const violation = createViolation('foo');
             validation.mockResolvedValue(violation);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toEqual(ViolationsList.create().addViolation(violation));
+                .toEqual(
+                    Validation.Fail(
+                        ViolationsList.create().addViolation(violation)
+                    )
+                );
         });
 
-        it('resolves to ViolationList if ViolationList gets returned', () => {
+        it('resolves to Validation.Fail if ViolationList gets returned', () => {
             const list = ViolationsList.create().addViolation('foo');
             validation.mockReturnValue(list);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toStrictEqual(list);
+                .toEqual(Validation.Fail(list));
         });
 
-        it('resolves to ViolationList if validation resolves to ViolationList', () => {
+        it('resolves to Validation.Fail if validation resolves to ViolationList', () => {
             const list = ViolationsList.create().addViolation('foo');
             validation.mockResolvedValue(list);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toStrictEqual(list);
+                .toEqual(Validation.Fail(list));
         });
 
         it('rejects when validation result type is unsupported', () => {
@@ -115,14 +126,15 @@ describe('Validator', () => {
     });
 
     describe('validation or rejection', () => {
-        it('does nothing if there is no violation occur', () => {
+        it('returns sanitized data if there is no violation occur', () => {
             validation.mockReturnValue(undefined);
-            return expect(validator.validateOrReject({}, SCHEMA))
+            const data = {};
+            return expect(validator.validateOrReject(data, SCHEMA))
                 .resolves
-                .toEqual(undefined);
+                .toEqual(data);
         });
 
-        it('rejects with ValidationError in case of any violation', () => {
+        it('rejects with ValidatorError in case of any violation', () => {
             const violation = createViolation('Some violation');
             validation.mockReturnValue(violation);
             return expect(validator.validateOrReject({}, SCHEMA))

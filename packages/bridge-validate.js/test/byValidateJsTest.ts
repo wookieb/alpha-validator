@@ -1,4 +1,4 @@
-import {byValidateJs} from "../src";
+import {byValidateJs} from "@src/index";
 
 describe('byValidateJs', () => {
     const SCHEMA = 'foo';

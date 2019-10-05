@@ -41,7 +41,7 @@ export class ViolationsList {
 
     getForPath(path: string[] | string): Violation[] {
         const realPath = Array.isArray(path) ? path : [path];
-        return this.violations.filter(v => matchesPath(v.path, realPath));
+        return this.violations.filter(v => v.path && matchesPath(v.path, realPath));
     }
 
     getViolations() {

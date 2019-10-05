@@ -1,12 +1,14 @@
 {
   "name": "alpha-validator",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Validation abstraction that allows you to completely customize whole validation process",
   "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/core",
   "scripts": {
-    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
-    "test": "../../node_modules/.bin/jest",
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint",
     "prepublishOnly": "npm run compile"
   },
   "files": [
@@ -14,5 +16,8 @@
   ],
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
-  "gitHead": "896da22c4b0ff5f69c1a10f988522b65274ae67c"
+  "gitHead": "896da22c4b0ff5f69c1a10f988522b65274ae67c",
+  "dependencies": {
+    "monet": "^0.9.0"
+  }
 }

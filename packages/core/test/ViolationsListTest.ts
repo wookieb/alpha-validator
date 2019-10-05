@@ -1,4 +1,4 @@
-import {ViolationsList} from "../src";
+import {ViolationsList} from "@src/index";
 
 function createViolation(path: string[]) {
     return {

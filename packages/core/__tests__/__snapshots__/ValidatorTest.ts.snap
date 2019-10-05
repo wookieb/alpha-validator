@@ -1,7 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Validator validation fails when validation for schema does not exist 1`] = `"There is no validation registered for schema: bar"`;
-
-exports[`Validator validation rejects when validation resolves to unsupported type 1`] = `"Invalid result from validation from schema: foo. Expected: ViolationList, Violation object or undefined"`;
-
-exports[`Validator validation rejects when validation result type is unsupported 1`] = `"Invalid result from validation from schema: foo. Expected: ViolationList, Violation object, undefined or Promise"`;

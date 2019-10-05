@@ -1,13 +1,14 @@
 {
   "name": "alpha-validator-bridge-validate.js",
-  "version": "0.1.7",
+  "version": "0.2.0",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
   "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/bridge-validate.js",
   "scripts": {
-    "test": "../../node_modules/.bin/jest",
-    "compile": "rm -rf compiled && ../../node_modules/.bin/tsc",
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint",
     "prepublishOnly": "npm run compile"
   },
   "files": [
@@ -16,11 +17,11 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "peerDependencies": {
-    "alpha-validator": "^0.2.0",
+    "alpha-validator": "^0.3.0",
     "validate.js": "^0.12.0"
   },
   "devDependencies": {
-    "alpha-validator": "^0.2.0",
+    "alpha-validator": "^0.3.0",
     "validate.js": "^0.12.0"
   },
   "gitHead": "896da22c4b0ff5f69c1a10f988522b65274ae67c"
