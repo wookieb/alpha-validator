@@ -2,7 +2,7 @@ import {ViolationsList} from "@src/index";
 
 function createViolation(path: string[]) {
     return {
-        message: Math.random() + '',
+        message: String(Math.random()),
         path
     };
 }
