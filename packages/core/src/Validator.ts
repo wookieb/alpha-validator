@@ -59,7 +59,7 @@ export class Validator {
         }));
     }
 
-    validateOrReject(data: any, schemaName: string, options?: any, errorMessage = 'Invalid data'): Promise<void> {
+    validateOrReject<T = any>(data: any, schemaName: string, options?: any, errorMessage = 'Invalid data'): Promise<T> {
         return this.validate(data, schemaName, options)
             .then(result => {
                 if (result.isFail()) {
