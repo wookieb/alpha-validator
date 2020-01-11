@@ -1,0 +1,35 @@
+{
+  "name": "alpha-validator-module",
+  "version": "0.1.0",
+  "description": "Module for alpha-validator",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint",
+    "prepublishOnly": "npm run compile"
+  },
+  "files": [
+    "compiled"
+  ],
+  "peerDependencies": {
+    "@pallad/modules": "^1.0.0",
+    "alpha-dic": "^1.1.4",
+    "alpha-validator": "^0.3.2"
+  },
+  "dependencies": {
+    "predicates": "^2.0.3"
+  },
+  "devDependencies": {
+    "@pallad/modules": "^1.0.0",
+    "alpha-dic": "^1.1.4",
+    "alpha-validator": "^0.3.2"
+  },
+  "keywords": [
+    "validator",
+    "module"
+  ],
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT"
+}

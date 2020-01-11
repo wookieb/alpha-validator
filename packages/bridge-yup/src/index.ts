@@ -1,8 +1,8 @@
 import * as yup from 'yup';
-import {SchemaValidationResult, Validation, ViolationsList} from 'alpha-validator';
+import {SchemaValidation, Validation, ViolationsList} from 'alpha-validator';
 
 export function byYup(schema: yup.Schema<any>, validateOptions: yup.ValidateOptions = {abortEarly: false}) {
-    return (data: any, schemaName: string, opts?: { yup?: yup.ValidateOptions }): Promise<SchemaValidationResult<any>> => {
+    return (data: any, schemaName: string, opts?: { yup?: yup.ValidateOptions }): Promise<SchemaValidation.Result<any>> => {
         return schema.validate(data, {
             ...(validateOptions || {}),
             ...(opts && opts.yup || {})

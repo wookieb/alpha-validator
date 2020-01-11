@@ -1,10 +1,7 @@
 import {Violation, ViolationsList} from "./ViolationsList";
 import {ValidatorError} from "./ValidatorError";
 import {Validation} from "monet";
-
-export type OptionalPromise<T> = Promise<T> | T;
-export type SchemaValidation<T> = (data: any, schemaName: string, options?: any) => OptionalPromise<SchemaValidationResult<T>>;
-export type SchemaValidationResult<T> = ViolationsList | undefined | Violation | Validation<ViolationsList, T>;
+import {SchemaValidation} from "./SchemaValidation";
 
 export function isViolation(data: any): data is Violation {
     return typeof data === 'object' && 'message' in data;
@@ -14,7 +11,7 @@ export function isPromise(data: any): data is Promise<any> {
     return typeof data === 'object' && 'then' in data;
 }
 
-function validationResult<T>(schemaName: string, data: any, result: SchemaValidationResult<T>): Validation<ViolationsList, T> {
+function validationResult<T>(schemaName: string, data: any, result: SchemaValidation.Result<T>): Validation<ViolationsList, T> {
     if (result === undefined) {
         return Validation.Success(data);
     }
@@ -41,7 +38,7 @@ function validationResult<T>(schemaName: string, data: any, result: SchemaValida
 export class Validator {
     private validations: Map<string, SchemaValidation<any>> = new Map();
 
-    validate<T = any>(data: any, schemaName: string, options?: any): Promise<Validation<ViolationsList, T>> {
+    validate<TInput = any, TResult = TInput>(data: TInput, schemaName: string, options?: any): Promise<Validation<ViolationsList, TResult>> {
         const validation = this.validations.get(schemaName);
         if (!validation) {
             return Promise.reject(
@@ -59,8 +56,8 @@ export class Validator {
         }));
     }
 
-    validateOrReject<T = any>(data: any, schemaName: string, options?: any, errorMessage = 'Invalid data'): Promise<T> {
-        return this.validate(data, schemaName, options)
+    validateOrReject<TInput = any, TResult = TInput>(data: TInput, schemaName: string, options?: any, errorMessage = 'Invalid data'): Promise<TResult> {
+        return this.validate<TInput, TResult>(data, schemaName, options)
             .then(result => {
                 if (result.isFail()) {
                     throw new ValidatorError(result.fail(), errorMessage);
