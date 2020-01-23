@@ -2,9 +2,9 @@ import * as is from 'predicates';
 import {assertValidSchemaNames} from "./common";
 
 /**
- * Annotation that marks given service as validation function for given schema names
+ * Annotation that marks given service as SchemaValidator service
  */
-export function schemaValidationAnnotation(...schemaNames: string[]): schemaValidationAnnotation.Annotation {
+export function schemaValidatorAnnotation(...schemaNames: string[]): schemaValidatorAnnotation.Annotation {
     assertValidSchemaNames(schemaNames);
     return {
         name: NAME,
@@ -12,9 +12,9 @@ export function schemaValidationAnnotation(...schemaNames: string[]): schemaVali
     };
 }
 
-const NAME = 'alpha-validator/schema-validation';
+const NAME = 'alpha-validator/schema-validator';
 
-export namespace schemaValidationAnnotation {
+export namespace schemaValidatorAnnotation {
     export interface Annotation {
         name: string;
         schemaNames: string[];
@@ -22,3 +22,5 @@ export namespace schemaValidationAnnotation {
 
     export const PREDICATE = is.prop('name', is.eq(NAME));
 }
+
+

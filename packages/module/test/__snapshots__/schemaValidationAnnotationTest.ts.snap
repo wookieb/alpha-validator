@@ -1,11 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`schemaValidationAnnotation failure requires schema name to be a non-blank string 1`] = `"Every schema name must be a non-blank string"`;
-
-exports[`schemaValidationAnnotation failure requires schema name to be a non-empty string 1`] = `"Every schema name must be a non-blank string"`;
-
-exports[`schemaValidationAnnotation failure requires schema name to be a string 1`] = `"Every schema name must be a non-blank string"`;
-
 exports[`schemaValidationAnnotation success registering multiple schemas 1`] = `
 Object {
   "name": "alpha-validator/schema-validation",
