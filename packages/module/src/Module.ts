@@ -18,7 +18,7 @@ export class Module extends _Module<{ container: Container }> {
         super('alpha-validator');
     }
 
-    protected init(): void {
+    init(): void {
         this.registerAction(StandardActions.INITIALIZATION, context => {
             context.container.registerDefinition(
                 Module.getValidatorDefinition()
