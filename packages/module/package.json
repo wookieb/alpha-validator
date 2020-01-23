@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-module",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Module for alpha-validator",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
