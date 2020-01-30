@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-bridge-yup",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "yup bridge for alpha-validator",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@types/yup": "^0.26.24",
-    "alpha-validator": "^0.4.0",
+    "alpha-validator": "^0.4.1",
     "yup": "^0.27.0"
   }
 }
