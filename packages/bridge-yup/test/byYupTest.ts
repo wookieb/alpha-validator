@@ -44,11 +44,13 @@ describe('byYup', () => {
         )
             .resolves
             .toEqual(
-                ViolationsList.create()
-                    .addViolation({
-                        message: 'name must be at least 5 characters',
-                        path: ['name']
-                    })
+                Validation.Fail(
+                    ViolationsList.create()
+                        .addViolation({
+                            message: 'name must be at least 5 characters',
+                            path: ['name']
+                        })
+                )
             );
     });
 
@@ -72,11 +74,13 @@ describe('byYup', () => {
         )
             .resolves
             .toEqual(
-                ViolationsList.create()
-                    .addViolation({
-                        message: 'profile.name must be at least 5 characters',
-                        path: ['profile', 'name']
-                    })
+                Validation.Fail(
+                    ViolationsList.create()
+                        .addViolation({
+                            message: 'profile.name must be at least 5 characters',
+                            path: ['profile', 'name']
+                        })
+                )
             );
     })
 });

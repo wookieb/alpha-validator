@@ -1,3 +1,5 @@
+import {Validation} from "monet";
+
 export interface Violation {
     path?: string[];
     message: string;
@@ -28,10 +30,14 @@ export class ViolationsList {
         return this;
     }
 
-    merge(violation: Violation | ViolationsList | undefined): this {
+    merge(violation: Violation | ViolationsList | undefined | Validation<ViolationsList, any>): this {
         if (violation) {
             if (violation instanceof ViolationsList) {
                 this.violations.push(...violation.getViolations());
+            } else if (Validation.isInstance(violation)) {
+                if (violation.isFail()) {
+                    this.violations.push(...violation.fail().getViolations());
+                }
             } else {
                 this.violations.push(violation);
             }

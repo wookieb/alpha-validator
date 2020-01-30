@@ -11,30 +11,6 @@ export function isPromise(data: any): data is Promise<any> {
     return typeof data === 'object' && 'then' in data;
 }
 
-function validationResult<T>(schemaName: string, data: any, result: SchemaValidation.Result<T>): Validation<ViolationsList, T> {
-    if (result === undefined) {
-        return Validation.Success(data);
-    }
-
-    if (result instanceof ViolationsList) {
-        return Validation.Fail(result);
-    }
-
-    if (isViolation(result)) {
-        return Validation.Fail(
-            ViolationsList.create().addViolation(result)
-        );
-    }
-
-    if (Validation.isInstance(result)) {
-        return result;
-    }
-
-    throw new Error(
-        `Invalid result from validation from schema: ${schemaName}. Expected: ViolationList, Violation, Validation object or undefined`
-    );
-}
-
 export class Validator {
     private validations: Map<string, SchemaValidation<any>> = new Map();
 
@@ -48,11 +24,11 @@ export class Validator {
         const result = validation(data, schemaName, options);
         if (isPromise(result)) {
             return result.then(r => {
-                return validationResult(schemaName, data, r);
+                return SchemaValidation.Result.toValidation<TResult>(r, data);
             })
         }
         return new Promise((resolve => {
-            resolve(validationResult(schemaName, data, result));
+            resolve(SchemaValidation.Result.toValidation<TResult>(result, data));
         }));
     }
 

@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import {SchemaValidation, Validation, ViolationsList} from 'alpha-validator';
 
 export function byYup(schema: yup.Schema<any>, validateOptions: yup.ValidateOptions = {abortEarly: false}) {
-    return (data: any, schemaName: string, opts?: { yup?: yup.ValidateOptions }): Promise<SchemaValidation.Result<any>> => {
+    return (data: any, schemaName: string, opts?: { yup?: yup.ValidateOptions }): Promise<Validation<ViolationsList, any>> => {
         return schema.validate(data, {
             ...(validateOptions || {}),
             ...(opts && opts.yup || {})
@@ -13,14 +13,13 @@ export function byYup(schema: yup.Schema<any>, validateOptions: yup.ValidateOpti
             .catch(e => {
                 if (yup.ValidationError.isError(e)) {
                     const list = ViolationsList.create();
-
                     for (const error of e.inner) {
                         list.addViolation(
                             error.message,
                             error.path.split('.')
                         )
                     }
-                    return list;
+                    return Validation.Fail(list);
                 }
                 throw e;
             })
