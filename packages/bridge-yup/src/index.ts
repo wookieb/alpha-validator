@@ -1,8 +1,9 @@
 import * as yup from 'yup';
-import {SchemaValidation, Validation, ViolationsList} from 'alpha-validator';
+import {Validation, ViolationsList} from 'alpha-validator';
+import {ValidateOptions} from 'yup/lib/types';
 
-export function byYup(schema: yup.Schema<any>, validateOptions: yup.ValidateOptions = {abortEarly: false}) {
-    return (data: any, schemaName: string, opts?: { yup?: yup.ValidateOptions }): Promise<Validation<ViolationsList, any>> => {
+export function byYup(schema: yup.BaseSchema<any>, validateOptions: ValidateOptions = {abortEarly: false}) {
+    return (data: any, schemaName: string, opts?: { yup?: ValidateOptions }): Promise<Validation<ViolationsList, any>> => {
         return schema.validate(data, {
             ...(validateOptions || {}),
             ...(opts && opts.yup || {})
@@ -16,7 +17,7 @@ export function byYup(schema: yup.Schema<any>, validateOptions: yup.ValidateOpti
                     for (const error of e.inner) {
                         list.addViolation(
                             error.message,
-                            error.path.split('.')
+                            error.path ? error.path.split('.') : []
                         )
                     }
                     return Validation.Fail(list);

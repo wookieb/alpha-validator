@@ -15,11 +15,10 @@
   "license": "MIT",
   "peerDependencies": {
     "alpha-validator": "^0.3.0",
-    "yup": "^0.27.0"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
-    "@types/yup": "^0.26.24",
     "alpha-validator": "^0.4.1",
-    "yup": "^0.27.0"
+    "yup": "^0.32.8"
   }
 }

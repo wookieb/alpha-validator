@@ -7,5 +7,10 @@
     },
     "include": [
         "**/*"
+    ],
+    "references": [
+        {
+            "path": "../../core/src"
+        }
     ]
 }

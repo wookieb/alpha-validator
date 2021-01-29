@@ -1,6 +1,6 @@
 {
   "devDependencies": {
-    "@pallad/scripts": "^1.1.4",
+    "@pallad/scripts": "^1.2.3",
     "@types/jest": "^24.0.18",
     "@types/node": "^10.12.18",
     "@types/sinon": "^7.5.0",
