@@ -30,8 +30,8 @@ export class Module extends _Module<{ container: Container }> {
         return Definition.create(References.VALIDATOR)
             .useConstructor(Validator)
             .annotate(onActivation(async function (this: Container, service: Validator) {
-                for (const [schemaValidator, _ann] of await this.getByAnnotation<SchemaValidator>(schemaValidatorAnnotation.PREDICATE, true)) {
-                    const annotation = _ann as schemaValidatorAnnotation.Annotation;
+                for (const [schemaValidator, ann] of await this.getByAnnotation<SchemaValidator>(schemaValidatorAnnotation.PREDICATE, true)) {
+                    const annotation = ann as schemaValidatorAnnotation.Annotation;
                     assertIsValidator(schemaValidator);
                     for (const schemaName of annotation.schemaNames) {
                         service.registerValidationForSchema(
@@ -41,8 +41,8 @@ export class Module extends _Module<{ container: Container }> {
                     }
                 }
 
-                for (const [schemaValidation, _ann] of await this.getByAnnotation<SchemaValidation<any>>(schemaValidationAnnotation.PREDICATE, true)) {
-                    const annotation = _ann as schemaValidationAnnotation.Annotation;
+                for (const [schemaValidation, ann] of await this.getByAnnotation<SchemaValidation<any>>(schemaValidationAnnotation.PREDICATE, true)) {
+                    const annotation = ann as schemaValidationAnnotation.Annotation;
                     for (const schemaName of annotation.schemaNames) {
                         service.registerValidationForSchema(schemaName, schemaValidation);
                     }
