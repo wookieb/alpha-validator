@@ -1,8 +1,8 @@
-import {Validation} from "monet";
+export {Validation} from "monet";
 
-export * from './ViolationsList';
+export * from './SchemaValidation';
+export * from './ValidationFunction';
+export * from './ValidationResult';
 export * from './Validator';
 export * from './ValidatorError';
-export * from './SchemaValidation';
-
-export {Validation};
+export * from './ViolationsList';

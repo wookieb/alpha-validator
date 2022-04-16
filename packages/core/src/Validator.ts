@@ -1,7 +1,8 @@
 import {Violation, ViolationsList} from "./ViolationsList";
 import {ValidatorError} from "./ValidatorError";
-import {Validation} from "monet";
+import {Maybe, Validation} from "monet";
 import {SchemaValidation} from "./SchemaValidation";
+import {ValidationFunction} from "./ValidationFunction";
 
 export function isViolation(data: any): data is Violation {
     return typeof data === 'object' && 'message' in data;
@@ -12,27 +13,29 @@ export function isPromise(data: any): data is Promise<any> {
 }
 
 export class Validator {
-    private validations: Map<string, SchemaValidation<any>> = new Map();
+    private validations: Map<string, ValidationFunction<unknown, unknown>> = new Map();
 
-    validate<TInput = any, TResult = TInput>(data: TInput, schemaName: string, options?: any): Promise<Validation<ViolationsList, TResult>> {
-        const validation = this.validations.get(schemaName);
-        if (!validation) {
+    validate<TInput = unknown, TOutput = TInput, TOptions = unknown>(
+        data: TInput,
+        schemaName: string,
+        options?: TOptions
+    ): Promise<Validation<ViolationsList, TOutput>> {
+        const validation = this.getValidation<TInput, TOutput>(schemaName)
+
+        if (validation.isNone()) {
             return Promise.reject(
                 new Error(`There is no validation registered for schema: ${schemaName}`)
             );
         }
-        const result = validation(data, schemaName, options);
-        if (isPromise(result)) {
-            return result.then(r => {
-                return SchemaValidation.Result.toValidation<TResult>(r, data);
-            })
-        }
-        return new Promise((resolve => {
-            resolve(SchemaValidation.Result.toValidation<TResult>(result, data));
-        }));
+
+        return Promise.resolve(validation.some()(data, options));
     }
 
-    validateOrReject<TInput = any, TResult = TInput>(data: TInput, schemaName: string, options?: any, errorMessage = 'Invalid data'): Promise<TResult> {
+    getValidation<TInput = unknown, TOutput = TInput>(schemaName: string): Maybe<ValidationFunction<TInput, TOutput>> {
+        return Maybe.fromFalsy(this.validations.get(schemaName) as ValidationFunction<TInput, TOutput> | undefined);
+    }
+
+    validateOrReject<TInput = any, TResult = TInput, TOptions = unknown>(data: TInput, schemaName: string, options?: TOptions, errorMessage = 'Invalid data'): Promise<TResult> {
         return this.validate<TInput, TResult>(data, schemaName, options)
             .then(result => {
                 if (result.isFail()) {
@@ -42,8 +45,8 @@ export class Validator {
             });
     }
 
-    registerValidationForSchema(schemaName: string, validation: SchemaValidation<any>): this {
-        this.validations.set(schemaName, validation);
+    registerValidationForSchema(schemaName: string, validation: SchemaValidation<unknown, unknown, unknown>): this {
+        this.validations.set(schemaName, SchemaValidation.toValidationFunction(schemaName, validation));
         return this;
     }
 

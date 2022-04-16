@@ -89,13 +89,6 @@ describe('Validator', () => {
                 .toEqual(Validation.Fail(list));
         });
 
-        it('rejects when validation result type is unsupported', () => {
-            validation.mockReturnValue('anything');
-            return expect(validator.validate({}, SCHEMA))
-                .rejects
-                .toThrowErrorMatchingSnapshot();
-        });
-
         it('rejects when validation resolves to unsupported type', () => {
             validation.mockResolvedValue('anything');
             return expect(validator.validate({}, SCHEMA))

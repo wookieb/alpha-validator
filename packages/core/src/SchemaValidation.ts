@@ -1,40 +1,25 @@
+import {ValidationResult} from "./ValidationResult";
+import {OptionalPromise} from "./types";
+import {ValidationFunction} from "./ValidationFunction";
+import {isPromise} from "./Validator";
 
-import {Violation, ViolationsList} from "./ViolationsList";
-import {Validation} from "monet";
-import {isViolation} from "./Validator";
-
-export type OptionalPromise<T> = Promise<T> | T;
-
-export interface SchemaValidation<T> {
-    (data: any, schemaName: string, options?: any): OptionalPromise<SchemaValidation.Result<T>>
+export interface SchemaValidation<TInput, TOutput = TInput, TOptions = unknown> {
+    (data: TInput, schemaName: string, options?: TOptions): OptionalPromise<ValidationResult<TOutput>>
 }
 
 export namespace SchemaValidation {
-    export type Result<T> = ViolationsList | undefined | Violation | Validation<ViolationsList, T>
+    export function toValidationFunction<TInput, TOutput, TOptions>(schemaName: string,
+                                                                    schemaValidation: SchemaValidation<TInput, TOutput, TOptions>): ValidationFunction<TInput, TOutput, TOptions> {
+        return (data: TInput, options?: TOptions) => {
+            const validationResult = schemaValidation(data, schemaName, options);
 
-    export namespace Result {
-        export function toValidation<T = any>(result: Result<T>, data: any): Validation<ViolationsList, T> {
-            if (result === undefined) {
-                return Validation.Success(data);
+            if (isPromise(validationResult)) {
+                return validationResult.then(r => {
+                    return ValidationResult.toValidation<TOutput>(r, data as unknown as TOutput);
+                })
             }
 
-            if (result instanceof ViolationsList) {
-                return Validation.Fail(result);
-            }
-
-            if (isViolation(result)) {
-                return Validation.Fail(
-                    ViolationsList.create().addViolation(result)
-                );
-            }
-
-            if (Validation.isInstance(result)) {
-                return result;
-            }
-
-            throw new Error(
-                `Invalid result from validation. Expected: ViolationList, Violation, Validation object or undefined`
-            );
+            return ValidationResult.toValidation<TOutput>(validationResult, data as unknown as TOutput);
         }
     }
 }

@@ -1,4 +1,5 @@
 import {ViolationsList} from "@src/index";
+import {Validation} from "monet";
 
 function createViolation(path: string[]) {
     return {
@@ -68,6 +69,94 @@ describe('ViolationsList', () => {
         });
     });
 
+    describe('merging at path', () => {
+        let list: ViolationsList;
+
+        const MESSAGE = 'some message';
+
+        beforeEach(() => {
+            list = ViolationsList.create();
+        });
+
+        it('no violation', () => {
+            list.mergeAtPath('foo', undefined);
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                );
+        });
+
+        it('violation without path', () => {
+            list.mergeAtPath('foo', {message: MESSAGE});
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo'], message: MESSAGE})
+                );
+        });
+
+        it('violation with path', () => {
+            list.mergeAtPath('foo', {path: ['bar'], message: MESSAGE});
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo', 'bar'], message: MESSAGE})
+                );
+        });
+
+        it('violations list without path', () => {
+            list.mergeAtPath('foo', ViolationsList.create().addViolation({message: MESSAGE}));
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo'], message: MESSAGE})
+                );
+        });
+
+        it('violations list with path', () => {
+            list.mergeAtPath('foo',
+                ViolationsList
+                    .create()
+                    .addViolation({path: ['bar'], message: MESSAGE})
+            );
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo', 'bar'], message: MESSAGE})
+                );
+        });
+
+        it('validation without path', () => {
+            list.mergeAtPath('foo',
+                Validation.Fail(
+                    ViolationsList
+                        .create()
+                        .addViolation({message: MESSAGE})
+                )
+            );
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo'], message: MESSAGE})
+                );
+        });
+
+        it('validation with path', () => {
+            list.mergeAtPath('foo',
+                Validation.Fail(
+                    ViolationsList
+                        .create()
+                        .addViolation({path: ['bar'], message: MESSAGE})
+                )
+            );
+            expect(list)
+                .toEqual(
+                    ViolationsList.create()
+                        .addViolation({path: ['foo', 'bar'], message: MESSAGE})
+                );
+        });
+    });
+
     describe('getting for path', () => {
         it('simple string path', () => {
             expect(list.getForPath('name'))
@@ -109,5 +198,18 @@ describe('ViolationsList', () => {
                     VIOLATION_5
                 ])
             );
+    });
+
+    describe('get list of nothing', () => {
+        it('returns undefined if list has no violations', () => {
+            expect(ViolationsList.create().getListOrNothing())
+                .toBe(undefined);
+        });
+
+        it('returns list if list has violations', () => {
+            const list = ViolationsList.create().addViolation('test');
+            expect(list.getListOrNothing())
+                .toBe(list);
+        });
     });
 });

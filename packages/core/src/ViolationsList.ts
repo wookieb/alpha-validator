@@ -1,4 +1,5 @@
 import {Validation} from "monet";
+import {ValidationResult} from "./ValidationResult";
 
 export interface Violation {
     path?: string[];
@@ -30,19 +31,44 @@ export class ViolationsList {
         return this;
     }
 
-    merge(violation: Violation | ViolationsList | undefined | Validation<ViolationsList, any>): this {
+    mergeAtPath(
+        path: string[] | string,
+        violation: ValidationResult<unknown>
+    ) {
+        const finalPath = Array.isArray(path) ? path : [path];
+
+        this.violations.push(
+            ...this.extractViolationForMerge(violation)
+                .map(violation => {
+                    const newPath = finalPath.concat(violation.path ?? []);
+                    return {
+                        ...violation,
+                        path: newPath
+                    };
+                })
+        );
+        return this;
+    }
+
+    merge(violation: ValidationResult<unknown>): this {
+        this.violations.push(...this.extractViolationForMerge(violation));
+        return this;
+    }
+
+    private extractViolationForMerge(violation: Violation | ViolationsList | undefined | Validation<ViolationsList, unknown>): Violation[] {
         if (violation) {
             if (violation instanceof ViolationsList) {
-                this.violations.push(...violation.getViolations());
+                return violation.getViolations();
             } else if (Validation.isInstance(violation)) {
                 if (violation.isFail()) {
-                    this.violations.push(...violation.fail().getViolations());
+                    return violation.fail().getViolations();
                 }
             } else {
-                this.violations.push(violation);
+                return [violation];
             }
         }
-        return this;
+
+        return [];
     }
 
     getForPath(path: string[] | string): Violation[] {
