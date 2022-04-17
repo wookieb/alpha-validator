@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-module",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Module for alpha-validator",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -24,7 +24,7 @@
   "devDependencies": {
     "@pallad/modules": "^1.2.0",
     "alpha-dic": "^3",
-    "alpha-validator": "^0.6.0"
+    "alpha-validator": "^0.6.1"
   },
   "keywords": [
     "validator",
