@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`index returns fail when invalid 1`] = `
+ViolationsList {
+  "violations": Array [
+    Object {
+      "message": "must have required property 'firstName'",
+      "path": Array [
+        "name",
+      ],
+    },
+  ],
+}
+`;

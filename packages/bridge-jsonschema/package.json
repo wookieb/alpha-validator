@@ -1,0 +1,29 @@
+{
+  "name": "alpha-validator-bridge-jsonschema",
+  "version": "0.0.9",
+  "description": "",
+  "main": "compiled/index.js",
+  "types": "compiled/index.d.ts",
+  "repository": "https://github.com/wookieb/alpha-validator/tree/master/packages/bridge-jsonschema",
+  "scripts": {
+    "test": "../../node_modules/.bin/pallad-scripts test",
+    "compile": "../../node_modules/.bin/pallad-scripts compile",
+    "lint": "../../node_modules/.bin/pallad-scripts lint",
+    "prepublishOnly": "npm run compile"
+  },
+  "files": [
+    "compiled"
+  ],
+  "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
+  "license": "MIT",
+  "peerDependencies": {
+    "alpha-validator": "^0.6.0",
+    "jsonschema": "^1.4.0",
+    "ajv": "^8.11.0"
+  },
+  "devDependencies": {
+    "alpha-validator": "*",
+    "jsonschema": "^1.4.0",
+    "ajv": "^8.11.0"
+  }
+}
