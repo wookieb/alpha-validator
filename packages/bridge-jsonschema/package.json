@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-bridge-jsonschema",
-  "version": "0.0.9",
+  "version": "0.1.0",
   "description": "",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -17,13 +17,13 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "peerDependencies": {
+    "ajv": "^8.11.0",
     "alpha-validator": "^0.6.0",
-    "jsonschema": "^1.4.0",
-    "ajv": "^8.11.0"
+    "jsonschema": "^1.4.0"
   },
   "devDependencies": {
-    "alpha-validator": "*",
-    "jsonschema": "^1.4.0",
-    "ajv": "^8.11.0"
+    "ajv": "^8.11.0",
+    "alpha-validator": "^0.6.2",
+    "jsonschema": "^1.4.0"
   }
 }
