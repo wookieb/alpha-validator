@@ -2,10 +2,10 @@
 
 exports[`byValidateJs nested validation 1`] = `
 ViolationsList {
-  "violations": Array [
-    Object {
+  "violations": [
+    {
       "message": "Profile name is too short (minimum is 5 characters)",
-      "path": Array [
+      "path": [
         "profile",
         "name",
       ],
@@ -16,10 +16,10 @@ ViolationsList {
 
 exports[`byValidateJs simple validation 1`] = `
 ViolationsList {
-  "violations": Array [
-    Object {
+  "violations": [
+    {
       "message": "Name is too short (minimum is 5 characters)",
-      "path": Array [
+      "path": [
         "name",
       ],
     },

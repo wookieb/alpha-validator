@@ -1,5 +1,5 @@
-import {Validation} from "monet";
 import {ValidationResult} from "./ValidationResult";
+import {Either, isEither} from "@sweet-monads/either";
 
 export interface Violation {
     path?: string[];
@@ -55,13 +55,13 @@ export class ViolationsList {
         return this;
     }
 
-    private extractViolationForMerge(violation: Violation | ViolationsList | undefined | Validation<ViolationsList, unknown>): Violation[] {
+    private extractViolationForMerge(violation: Violation | ViolationsList | undefined | Either<ViolationsList, unknown>): Violation[] {
         if (violation) {
             if (violation instanceof ViolationsList) {
                 return violation.getViolations();
-            } else if (Validation.isInstance(violation)) {
-                if (violation.isFail()) {
-                    return violation.fail().getViolations();
+            } else if (isEither(violation)) {
+                if (violation.isLeft()) {
+                    return violation.value.getViolations();
                 }
             } else {
                 return [violation];

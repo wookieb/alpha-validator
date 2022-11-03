@@ -1,5 +1,5 @@
 import {createViolation, Validator, ViolationsList} from "@src/index";
-import {Validation} from "monet";
+import {left, right} from "@sweet-monads/either";
 
 describe('Validator', () => {
     let validator: Validator;
@@ -38,7 +38,7 @@ describe('Validator', () => {
             const data = {};
             return expect(validator.validate(data, SCHEMA))
                 .resolves
-                .toEqual(Validation.Success(data))
+                .toEqual(right(data))
         });
 
         it('resolves to Validation.Success if schema validation resolves to undefined', () => {
@@ -46,7 +46,7 @@ describe('Validator', () => {
             const data = {};
             return expect(validator.validate(data, SCHEMA))
                 .resolves
-                .toEqual(Validation.Success(data))
+                .toEqual(right(data))
         });
 
         it('resolves to Validation.Fail if violation is returned', () => {
@@ -55,7 +55,7 @@ describe('Validator', () => {
             return expect(validator.validate({}, SCHEMA))
                 .resolves
                 .toEqual(
-                    Validation.Fail(
+                    left(
                         ViolationsList.create().addViolation(violation)
                     )
                 );
@@ -67,7 +67,7 @@ describe('Validator', () => {
             return expect(validator.validate({}, SCHEMA))
                 .resolves
                 .toEqual(
-                    Validation.Fail(
+                    left(
                         ViolationsList.create().addViolation(violation)
                     )
                 );
@@ -78,7 +78,7 @@ describe('Validator', () => {
             validation.mockReturnValue(list);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toEqual(Validation.Fail(list));
+                .toEqual(left(list));
         });
 
         it('resolves to Validation.Fail if validation resolves to ViolationList', () => {
@@ -86,7 +86,7 @@ describe('Validator', () => {
             validation.mockResolvedValue(list);
             return expect(validator.validate({}, SCHEMA))
                 .resolves
-                .toEqual(Validation.Fail(list));
+                .toEqual(left(list));
         });
 
         it('rejects when validation resolves to unsupported type', () => {

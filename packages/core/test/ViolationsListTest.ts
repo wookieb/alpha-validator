@@ -1,5 +1,5 @@
 import {ViolationsList} from "@src/index";
-import {Validation} from "monet";
+import {left} from "@sweet-monads/either";
 
 function createViolation(path: string[]) {
     return {
@@ -128,7 +128,7 @@ describe('ViolationsList', () => {
 
         it('validation without path', () => {
             list.mergeAtPath('foo',
-                Validation.Fail(
+                left(
                     ViolationsList
                         .create()
                         .addViolation({message: MESSAGE})
@@ -143,7 +143,7 @@ describe('ViolationsList', () => {
 
         it('validation with path', () => {
             list.mergeAtPath('foo',
-                Validation.Fail(
+                left(
                     ViolationsList
                         .create()
                         .addViolation({path: ['bar'], message: MESSAGE})

@@ -1,6 +1,6 @@
 import {ValidationResult} from "@src/ValidationResult";
 import {Violation, ViolationsList} from "@src/ViolationsList";
-import {Validation} from "monet";
+import {left, right} from "@sweet-monads/either";
 
 describe('ValidationResult', () => {
     const DATA = {
@@ -8,32 +8,32 @@ describe('ValidationResult', () => {
     };
 
     it('returns data is validation result is undefined', () => {
-        expect(ValidationResult.toValidation(undefined, DATA))
-            .toEqual(Validation.Success(DATA));
+        expect(ValidationResult.toEither(undefined, DATA))
+            .toEqual(right(DATA));
     });
 
     it('returns violations list if result if result is violation list', () => {
         const list = ViolationsList.create().addViolation('test');
-        expect(ValidationResult.toValidation(list, DATA))
-            .toEqual(Validation.Fail(list));
+        expect(ValidationResult.toEither(list, DATA))
+            .toEqual(left(list));
     });
 
     it('returns violations list with violation if result is violation object', () => {
         const violation: Violation = {message: 'some message'};
-        expect(ValidationResult.toValidation(violation, DATA))
-            .toEqual(Validation.Fail(ViolationsList.create().addViolation(violation)));
+        expect(ValidationResult.toEither(violation, DATA))
+            .toEqual(left(ViolationsList.create().addViolation(violation)));
     });
 
     it('returns violations list from Validation', () => {
         const violation: Violation = {message: 'some message'};
-        expect(ValidationResult.toValidation(
-            Validation.Fail(
+        expect(ValidationResult.toEither(
+            left(
                 ViolationsList
                     .create()
                     .addViolation(violation)
             ),
             DATA)
         )
-            .toEqual(Validation.Fail(ViolationsList.create().addViolation(violation)));
+            .toEqual(left(ViolationsList.create().addViolation(violation)));
     });
 });

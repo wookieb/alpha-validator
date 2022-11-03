@@ -1,15 +1,17 @@
 import * as yup from 'yup';
-import {Validation, ViolationsList} from 'alpha-validator';
+import {ViolationsList} from 'alpha-validator';
 import {ValidateOptions} from 'yup/lib/types';
+import {Either, left, right} from "@sweet-monads/either";
+
 
 export function byYup<TInput, TOutput = TInput>(schema: yup.BaseSchema<any>, validateOptions: ValidateOptions = {abortEarly: false}) {
-    return (data: TInput, schemaName: string, opts?: { yup?: ValidateOptions }): Promise<Validation<ViolationsList, TOutput>> => {
+    return (data: TInput, schemaName: string, opts?: { yup?: ValidateOptions }): Promise<Either<ViolationsList, TOutput>> => {
         return schema.validate(data, {
             ...(validateOptions || {}),
             ...(opts && opts.yup || {})
         })
             .then(result => {
-                return Validation.Success<ViolationsList, TOutput>(result);
+                return right<ViolationsList, TOutput>(result);
             })
             .catch(e => {
                 if (yup.ValidationError.isError(e)) {
@@ -20,7 +22,7 @@ export function byYup<TInput, TOutput = TInput>(schema: yup.BaseSchema<any>, val
                             error.path ? error.path.split('.') : []
                         )
                     }
-                    return Validation.Fail(list);
+                    return left(list);
                 }
                 throw e;
             })

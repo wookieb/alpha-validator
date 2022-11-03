@@ -1,9 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`schemaValidationAnnotation success registering multiple schemas 1`] = `
-Object {
+{
   "name": "alpha-validator/schema-validation",
-  "schemaNames": Array [
+  "schemaNames": [
     "schema1",
     "schema2",
   ],
@@ -11,9 +11,9 @@ Object {
 `;
 
 exports[`schemaValidationAnnotation success registering single schema 1`] = `
-Object {
+{
   "name": "alpha-validator/schema-validation",
-  "schemaNames": Array [
+  "schemaNames": [
     "schema1",
   ],
 }

@@ -2,4 +2,4 @@
 
 exports[`Validator validation fails when validation for schema does not exist 1`] = `"There is no validation registered for schema: bar"`;
 
-exports[`Validator validation rejects when validation resolves to unsupported type 1`] = `"Invalid result from validation. Expected: ViolationList, Violation, Validation object or undefined"`;
+exports[`Validator validation rejects when validation resolves to unsupported type 1`] = `"Invalid result from validation. Expected: ViolationList, Violation, Either object or undefined"`;

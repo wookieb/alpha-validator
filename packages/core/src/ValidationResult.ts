@@ -1,30 +1,30 @@
 import {Violation, ViolationsList} from "./ViolationsList";
-import {Validation} from "monet";
 import {isViolation} from "./Validator";
+import {Either, left, right, isEither} from "@sweet-monads/either";
 
-export type ValidationResult<T> = ViolationsList | undefined | Violation | Validation<ViolationsList, T>;
+export type ValidationResult<T> = ViolationsList | undefined | Violation | Either<ViolationsList, T>;
 export namespace ValidationResult {
-    export function toValidation<T>(result: ValidationResult<T>, data: T): Validation<ViolationsList, T> {
+    export function toEither<T>(result: ValidationResult<T>, data: T): Either<ViolationsList, T> {
         if (result === undefined) {
-            return Validation.Success(data as T);
+            return right(data as T);
         }
 
         if (result instanceof ViolationsList) {
-            return Validation.Fail(result);
+            return left(result);
         }
 
         if (isViolation(result)) {
-            return Validation.Fail(
+            return left(
                 ViolationsList.create().addViolation(result)
             );
         }
 
-        if (Validation.isInstance(result)) {
+        if (isEither(result)) {
             return result;
         }
 
         throw new Error(
-            `Invalid result from validation. Expected: ViolationList, Violation, Validation object or undefined`
+            `Invalid result from validation. Expected: ViolationList, Violation, Either object or undefined`
         );
     }
 }

@@ -15,11 +15,11 @@ export namespace SchemaValidation {
 
             if (isPromise(validationResult)) {
                 return validationResult.then(r => {
-                    return ValidationResult.toValidation<TOutput>(r, data as unknown as TOutput);
+                    return ValidationResult.toEither<TOutput>(r, data as unknown as TOutput);
                 })
             }
 
-            return ValidationResult.toValidation<TOutput>(validationResult, data as unknown as TOutput);
+            return ValidationResult.toEither<TOutput>(validationResult, data as unknown as TOutput);
         }
     }
 }

@@ -1,7 +1,7 @@
 import {OptionalPromise} from "./types";
 import {ViolationsList} from "./ViolationsList";
-import {Validation} from "monet";
+import {Either} from "@sweet-monads/either";
 
 export interface ValidationFunction<TInput, TOutput = TInput, TOptions = unknown> {
-    (data: TInput, options?: TOptions): OptionalPromise<Validation<ViolationsList, TOutput>>;
+    (data: TInput, options?: TOptions): OptionalPromise<Either<ViolationsList, TOutput>>;
 }

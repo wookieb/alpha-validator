@@ -1,9 +1,9 @@
 {
   "devDependencies": {
-    "@pallad/scripts": "^2",
+    "@pallad/scripts": "^3",
     "@types/node": "^14",
-    "@types/sinon": "^9",
+    "@types/sinon": "^10",
     "lerna": "^4",
-    "sinon": "^9"
+    "sinon": "^14"
   }
 }

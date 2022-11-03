@@ -1,8 +1,9 @@
 import {Violation, ViolationsList} from "./ViolationsList";
 import {ValidatorError} from "./ValidatorError";
-import {Maybe, Validation} from "monet";
 import {SchemaValidation} from "./SchemaValidation";
 import {ValidationFunction} from "./ValidationFunction";
+import {Maybe, fromNullable} from "@sweet-monads/maybe";
+import {Either} from "@sweet-monads/either";
 
 export function isViolation(data: any): data is Violation {
     return typeof data === 'object' && 'message' in data;
@@ -19,8 +20,8 @@ export class Validator {
         data: TInput,
         schemaName: string,
         options?: TOptions
-    ): Promise<Validation<ViolationsList, TOutput>> {
-        const validation = this.getValidation<TInput, TOutput>(schemaName)
+    ): Promise<Either<ViolationsList, TOutput>> {
+        const validation = this.getValidationFunction<TInput, TOutput>(schemaName)
 
         if (validation.isNone()) {
             return Promise.reject(
@@ -28,20 +29,20 @@ export class Validator {
             );
         }
 
-        return Promise.resolve(validation.some()(data, options));
+        return Promise.resolve(validation.value(data, options));
     }
 
-    getValidation<TInput = unknown, TOutput = TInput>(schemaName: string): Maybe<ValidationFunction<TInput, TOutput>> {
-        return Maybe.fromFalsy(this.validations.get(schemaName) as ValidationFunction<TInput, TOutput> | undefined);
+    getValidationFunction<TInput = unknown, TOutput = TInput>(schemaName: string): Maybe<ValidationFunction<TInput, TOutput>> {
+        return fromNullable(this.validations.get(schemaName) as ValidationFunction<TInput, TOutput> | undefined);
     }
 
     validateOrReject<TInput = any, TResult = TInput, TOptions = unknown>(data: TInput, schemaName: string, options?: TOptions, errorMessage = 'Invalid data'): Promise<TResult> {
         return this.validate<TInput, TResult>(data, schemaName, options)
             .then(result => {
-                if (result.isFail()) {
-                    throw new ValidatorError(result.fail(), errorMessage);
+                if (result.isLeft()) {
+                    throw new ValidatorError(result.value, errorMessage);
                 }
-                return result.success();
+                return result.value;
             });
     }
 

@@ -18,12 +18,14 @@
   "license": "MIT",
   "peerDependencies": {
     "ajv": "^8.11.0",
+    "@sweet-monads/either": "^3",
     "alpha-validator": "^0.6.0",
     "jsonschema": "^1.4.0"
   },
   "devDependencies": {
     "ajv": "^8.11.0",
     "alpha-validator": "^0.6.2",
+    "@sweet-monads/either": "^3",
     "jsonschema": "^1.4.0"
   }
 }

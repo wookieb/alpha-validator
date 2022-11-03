@@ -31,7 +31,7 @@ describe('index', () => {
 	it('returns input object on success', () => {
 		const result = validation(VALID_INPUT);
 
-		expect(result.success())
+		expect(result.value)
 			.toEqual(VALID_INPUT);
 	});
 
@@ -42,7 +42,7 @@ describe('index', () => {
 			age: 24
 		});
 
-		expect(result.fail())
+		expect(result.value)
 			.toMatchSnapshot();
 	});
 });

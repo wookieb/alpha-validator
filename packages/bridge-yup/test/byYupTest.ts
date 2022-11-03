@@ -1,6 +1,7 @@
 import {byYup} from "@src/index";
 import * as yup from 'yup';
-import {Validation, ViolationsList} from "alpha-validator";
+import {ViolationsList} from "alpha-validator";
+import {left, right} from "@sweet-monads/either";
 
 describe('byYup', () => {
     const SCHEMA = 'foo';
@@ -22,7 +23,7 @@ describe('byYup', () => {
         )
             .resolves
             .toEqual(
-                Validation.Success({
+                right({
                     name: 'wookieb'
                 })
             );
@@ -44,7 +45,7 @@ describe('byYup', () => {
         )
             .resolves
             .toEqual(
-                Validation.Fail(
+                left(
                     ViolationsList.create()
                         .addViolation({
                             message: 'name must be at least 5 characters',
@@ -74,7 +75,7 @@ describe('byYup', () => {
         )
             .resolves
             .toEqual(
-                Validation.Fail(
+                left(
                     ViolationsList.create()
                         .addViolation({
                             message: 'profile.name must be at least 5 characters',

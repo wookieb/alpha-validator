@@ -15,10 +15,12 @@
   "license": "MIT",
   "peerDependencies": {
     "alpha-validator": "^0.6.0",
+    "@sweet-monads/either": "^3",
     "yup": "^0.32.8"
   },
   "devDependencies": {
     "alpha-validator": "^0.6.2",
+    "@sweet-monads/either": "^3",
     "yup": "^0.32.8"
   }
 }

@@ -1,4 +1,4 @@
-export {Validation} from "monet";
+export {Either} from "@sweet-monads/either";
 
 export * from './SchemaValidation';
 export * from './ValidationFunction';
