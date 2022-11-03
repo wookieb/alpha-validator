@@ -15,7 +15,7 @@
   "license": "MIT",
   "peerDependencies": {
     "@sweet-monads/either": "^3",
-    "alpha-validator": "^0.6.0",
+    "alpha-validator": "^0.7.0",
     "yup": "^0.32.8"
   },
   "devDependencies": {
