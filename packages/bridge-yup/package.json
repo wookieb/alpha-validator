@@ -1,6 +1,6 @@
 {
   "name": "alpha-validator-bridge-yup",
-  "version": "0.4.4",
+  "version": "0.5.0",
   "description": "yup bridge for alpha-validator",
   "main": "compiled/index.js",
   "types": "compiled/index.d.ts",
@@ -14,13 +14,13 @@
   "author": "Łukasz Kużyński <lukasz.kuzynski@gmail.com> (http://wookieb.pl)",
   "license": "MIT",
   "peerDependencies": {
-    "alpha-validator": "^0.6.0",
     "@sweet-monads/either": "^3",
+    "alpha-validator": "^0.6.0",
     "yup": "^0.32.8"
   },
   "devDependencies": {
-    "alpha-validator": "^0.6.2",
     "@sweet-monads/either": "^3",
+    "alpha-validator": "^0.7.0",
     "yup": "^0.32.8"
   }
 }
